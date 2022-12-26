@@ -1,0 +1,55 @@
+/*
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+*/
+
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.pdf'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // pdf related dependencies
+    implementation 'org.apache.pdfbox:pdfbox:2.0.1'
+    implementation 'org.apache.pdfbox:debugger-app:2.0.1'
+    implementation 'org.apache.pdfbox:fontbox:2.0.0'
+    implementation 'org.apache.pdfbox:jempbox:1.8.11'
+    implementation 'org.apache.pdfbox:xmpbox:2.0.0'
+    implementation 'org.apache.pdfbox:preflight:2.0.1'
+    implementation 'org.apache.pdfbox:pdfbox-tools:2.0.0'
+    implementation 'org.apache.pdfbox:pdfbox-debugger:2.0.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
