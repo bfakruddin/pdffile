@@ -51,76 +51,88 @@ public class PDFUtils {
 
         System.out.println((int)pageWidth-10-dateTextWidth);
 
-        myTextClass.addSingleLineText("Date: "+d_format.format(new Date()), (int) (pageWidth-10-dateTextWidth),
-                pageHeight-65, pdFont, 9, Color.BLACK);
+        myTextClass.addSingleLineText("Date: "+d_format.format(new Date()), (int) (pageWidth-10-dateTextWidth), pageHeight-65, pdFont, 9, Color.BLACK);
 
         // Driver Salary heading
         String heading = "Driver Salary Receipt";
         float headingTextWidth = myTextClass.getTextWidth(heading, headingFont, 12);
-        myTextClass.addSingleLineText(heading, (int) ((pageWidth/2)-(headingTextWidth/2)), pageHeight-90, headingFont,
-                12,
-                Color.BLACK);
+        myTextClass.addSingleLineText(heading, (int) ((pageWidth/2)-(headingTextWidth/2)), pageHeight-90, headingFont, 12, Color.BLACK);
 
         // Print salary details
         // Adding string at right alignment top
         String vehicleNumber_Constant = "Vehicle Number : ";
         String vehicleNumber = "TS07 HW 5578";
-        myTextClass.addSingleLineText(vehicleNumber_Constant+ vehicleNumber, 50, pageHeight-120, pdFont, 10, Color.BLACK);
+//        myTextClass.addSingleLineText(vehicleNumber_Constant+ vehicleNumber, 50, pageHeight-120, pdFont, 10, Color.BLACK);
 
         String salaryOfTheMonth_Constant = "Salary of the Month : ";
         String salaryOfTheMonth = "December";
-        myTextClass.addSingleLineText(salaryOfTheMonth_Constant + salaryOfTheMonth, 50, pageHeight-140, pdFont, 10,
-                Color.BLACK);
+//        myTextClass.addSingleLineText(salaryOfTheMonth_Constant + salaryOfTheMonth, 50, pageHeight-140, pdFont, 10, Color.BLACK);
 
         String amountPaid_Constant = "Amount Paid : ";
         String amountPaid = "15000";
-        myTextClass.addSingleLineText(amountPaid_Constant + amountPaid, 50, pageHeight-160, pdFont, 10,
-                Color.BLACK);
+//        myTextClass.addSingleLineText(amountPaid_Constant + amountPaid, 50, pageHeight-160, pdFont, 10, Color.BLACK);
 
         String date_Constant = "Date : ";
         String date = d_format.format(new Date());
 
-        myTextClass.addSingleLineText(date_Constant+date, 50,
-                pageHeight-180, pdFont, 10, Color.BLACK);
+//        myTextClass.addSingleLineText(date_Constant+date, 50, pageHeight-180, pdFont, 10, Color.BLACK);
+
+        String[] salDetails = {vehicleNumber_Constant+ vehicleNumber, salaryOfTheMonth_Constant + salaryOfTheMonth, amountPaid_Constant + amountPaid, date_Constant+date};
+        myTextClass.addMultiLineText(salDetails, 15, 50, pageHeight-120, pdFont, 10, Color.BLACK);
+
 
         String employeeName = "Baba Fakruddin Dudekula";
         String driverName = "Bomma Nagarjuna";
         // Print the certificate declaration
-        String employeeDeclaration = "Received From Mr./Ms. " +
-                employeeName +
-                amountPaid+" to driver " +
-                driverName +
-                " towards salary of the month of "+salaryOfTheMonth;
-        myTextClass.addSingleLineText(employeeDeclaration, 50, pageHeight-210, pdFont, 20, Color.BLACK);
+//        String employeeDeclaration = "Received From Mr./Ms. " +
+//                employeeName +
+//                amountPaid+" to driver " +
+//                driverName +
+//                " towards salary of the month of "+salaryOfTheMonth;
+//        myTextClass.addSingleLineText(employeeDeclaration, 50, pageHeight-210, pdFont, 10, Color.BLACK);
 
+        String[] lines = new String[2];
+        lines[0] = "Received From Mr./Ms "+ employeeName + " " + amountPaid + " to driver " + driverName + " towards";
+        lines[1] = "salary of the month of "+salaryOfTheMonth;
+
+        myTextClass.addMultiLineText(lines, 20, 50, pageHeight -210, pdFont, 10, Color.BLACK);
+
+        // Print employee Name before starting receipt acknowledgement
         String employeeName_Constant = "Employee Name : ";
         float employeeName_Length = myTextClass.getTextWidth(employeeName_Constant+ employeeName, pdFont, 12);
         myTextClass.addSingleLineText(employeeName_Constant + employeeName, (int) (pageWidth-10-employeeName_Length),
-                pageHeight-240, pdFont, 10, Color.BLACK);
+                pageHeight-280, pdFont, 10, Color.BLACK);
+
+        // Print Driver Receipt Acknowledgement heading
+        String acknowledgementHeading = "Receipt Acknowledgement";
+        float acknowledgementHeadingTextWidth = myTextClass.getTextWidth(acknowledgementHeading, headingFont, 12);
+        myTextClass.addSingleLineText(acknowledgementHeading, (int) ((pageWidth/2)-(acknowledgementHeadingTextWidth/2)), pageHeight-320, headingFont, 12, Color.BLACK);
+
+        // Add Salary Details
+//        String[] salDetails = {vehicleNumber_Constant+ vehicleNumber, salaryOfTheMonth_Constant + salaryOfTheMonth, amountPaid_Constant + amountPaid, date_Constant+date};
+        myTextClass.addMultiLineText(salDetails, 15, 50, pageHeight-350, pdFont, 10, Color.BLACK);
+
+        // Add description
+        myTextClass.addMultiLineText(lines, 20, 50, pageHeight -430, pdFont, 10, Color.BLACK);
 
         //Add Image of stamp with driver salary at the bottom left of the page
-        PDImageXObject stampWithDriverSign = PDImageXObject.createFromFile("/Users/baba/Documents/Technical" +
-                "-Practicing/Java_Projects" +
-                "/pdffile/src/main/resources/Images/stamp_With_Driver_Sign.png", document);
+        PDImageXObject stampWithDriverSign = PDImageXObject.createFromFile(System.getProperty("user.dir")+ "/src/main/resources/Images/stamp_With_Driver_Sign.png", document);
         contentStream.drawImage(stampWithDriverSign, 55, 200, 95, 70);
 
         //Add Driver Sign at the right bottom
-        PDImageXObject driverSign = PDImageXObject.createFromFile("/Users/baba/Documents/Technical-Practicing" +
-                "/Java_Projects/pdffile/src/main/resources/Images/Driver_Sign.png", document);
-        contentStream.drawImage(driverSign, 400, 180, 130, 40);
+        PDImageXObject driverSign = PDImageXObject.createFromFile(System.getProperty("user.dir")+"/src/main/resources/Images/Driver_Sign.png", document);
+        contentStream.drawImage(driverSign, 400, 200, 130, 40);
 
         // Add Driver Name below Signature
-        myTextClass.addSingleLineText("Driver Name: Bomma Nagarjuna", 380, 160, pdFont, 14, Color.BLACK);
+        myTextClass.addSingleLineText("Driver Name: Bomma Nagarjuna", 380, 180, pdFont, 14, Color.BLACK);
 
         // Add Driver license number below Driver Name
-        PDImageXObject driverLicenseNumber = PDImageXObject.createFromFile("/Users/baba/Documents/Technical" +
-                "-Practicing/Java_Projects/pdffile/src/main/resources/Images/Driver_License.png", document);
-        contentStream.drawImage(driverLicenseNumber, 380, 80, 200, 70);
-
+        PDImageXObject driverLicenseNumber = PDImageXObject.createFromFile(System.getProperty("user.dir")+"/src/main/resources/Images/Driver_License.png", document);
+        contentStream.drawImage(driverLicenseNumber, 380, 60, 200, 70);
 
         //Close content Stream
         contentStream.close();
-        document.save(new File("/Users/baba/Documents/chauffeurSalary.pdf"));
+        document.save(new File(System.getProperty("user.dir")+"/src/main/resources/generatedfiles/chauffeurSalary.pdf"));
         document.close();
     }
 
@@ -135,8 +147,7 @@ public class PDFUtils {
         int pageWidth = (int) pdPage.getTrimBox().getWidth();
         int pageHeight = (int) pdPage.getTrimBox().getHeight();
 
-        PDImageXObject pdImageXObject = PDImageXObject.createFromFile("/Users/baba/Documents/Technical-Practicing" +
-                "/Java_Projects/pdffile/src/main/resources/Images/images.jpeg", pdDocument);
+        PDImageXObject pdImageXObject = PDImageXObject.createFromFile(System.getProperty("user.dir")+"/src/main/resources/Images/images.jpeg", pdDocument);
         pdPageContentStream.drawImage(pdImageXObject, 0, pageHeight-233, pageWidth, 239);
 //        pdPageContentStream.drawImage(pdImageXObject, 0, 75, 320, 239);
 
